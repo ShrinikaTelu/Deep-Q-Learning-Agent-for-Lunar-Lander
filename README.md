@@ -78,3 +78,12 @@ Train an intelligent agent to safely land a spacecraft on the Moon using the Ope
 ---
 
 ## 📁 Project Structure
+
+
+---
+
+## 🚀 How to Run
+
+```bash
+pip install gym tensorflow numpy
+python lunar_lander.ipynb
