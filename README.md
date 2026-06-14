@@ -1,65 +1,43 @@
 # Deep Q-Learning Agent for Lunar Lander
 
-A Deep Q-Network (DQN) trained to land a spacecraft in the OpenAI Gym
-**LunarLander** environment — plus a **playable browser game** that visualizes
-the exact environment the agent learns to solve.
+A Deep Q-Network (DQN) trained to land a spacecraft in the **LunarLander-v3** environment, with an interactive browser demo that visualizes the exact environment the agent learns to solve.
 
-🎮 **Play / watch the demo:** _add your GitHub Pages URL here_
-📓 **Training notebook:** [`lunar_lander.ipynb`](lunar_lander.ipynb)
+## 🎮 [**Play the Live Demo**](https://shrinikatelu.github.io/Deep-Q-Learning-Agent-for-Lunar-Lander/)
 
-## The interactive demo
+Fly the lander yourself or watch an autopilot policy. See the live 8-number state vector and 4 discrete actions the agent uses.
 
-The agent itself is a TensorFlow model, so the browser demo (`web/index.html`)
-re-creates the **environment** rather than running the trained network in-page:
-a faithful LunarLander with the same 8-dimensional state vector and 4 discrete
-actions the DQN reasons over. It's a single static HTML file — no build, no
-backend, no dependencies.
+## What's Inside
 
-- **You fly** — arrow keys drive the thrusters; feel why the control problem is
-  hard (gravity, drift, a narrow pad).
-- **Autopilot** — a clean hand-written policy that mimics what a converged DQN
-  does: control descent rate, then steer horizontal velocity to the pad.
-  (Verified to land 100% of randomized starts across 1,000 simulations.)
-- **State-vector panel** — shows the live 8 numbers the agent observes
-  (position, velocity, angle, leg contact) and highlights which of the 4
-  actions is firing each frame. The demo doubles as an explainer of *what the
-  agent sees and chooses*.
+- **Training Notebook** ([`lunar_lander.ipynb`](lunar_lander.ipynb)) — DQN implementation with experience replay, target network, and ε-greedy exploration
+- **Interactive Demo** — Playable browser game recreating the environment with manual controls and autopilot mode
+- **State Visualization** — Real-time display of the 8-dimensional observation space (position, velocity, angle, leg contact)
 
-## The DQN agent (notebook)
+## The DQN Agent
 
-The notebook implements the standard DQN algorithm:
+**Architecture:** 8-state input → Dense(64, ReLU) → Dense(64, ReLU) → 4 Q-values
 
-- **Q-network + target network** — a second, slowly-updated network stabilizes
-  the learning target (soft updates via Polyak averaging).
-- **Experience replay** — transitions are stored in a buffer and sampled in
-  mini-batches, breaking correlation between consecutive steps.
-- **ε-greedy exploration** — exploration decays over training toward
-  exploitation of the learned policy.
-- **Bellman target** — `y = r + γ · maxₐ Q̂(s', a)` for non-terminal steps.
+**Key Features:**
+- Target network with soft updates (Polyak averaging)
+- Experience replay buffer for breaking temporal correlation
+- ε-greedy exploration with decay
+- Bellman equation for Q-learning: `y = r + γ · maxₐ Q̂(s', a)`
 
-Network: 8-feature state → Dense(64, ReLU) → Dense(64, ReLU) → 4 Q-values.
+## Run Locally
 
-> **Provenance:** this implementation is built on the reinforcement-learning
-> lab from the DeepLearning.AI *Machine Learning Specialization*. The DQN
-> structure follows that exercise; the interactive browser demo is original
-> work built to visualize the environment.
-
-## Run the notebook
-
-LunarLander now lives in **Gymnasium** (the maintained successor to `gym`),
-and the environment is `LunarLander-v3`:
-
+**Notebook:**
 ```bash
 pip install "gymnasium[box2d]" tensorflow numpy
 jupyter notebook lunar_lander.ipynb
 ```
 
-## Run the demo locally
-
+**Demo:**
 ```bash
-cd web && python -m http.server 8000   # then open http://localhost:8000
+python -m http.server 8000
+# Open http://localhost:8000
 ```
 
 ---
 
-Built by [Shrinika Telu](https://shrinikatelu.github.io/) — [LinkedIn](https://www.linkedin.com/in/shrinikatelu/)
+**Provenance:** Built on the reinforcement learning lab from DeepLearning.AI's Machine Learning Specialization. Interactive demo is original work.
+
+Built by [Shrinika Telu](https://shrinikatelu.github.io/) · [LinkedIn](https://www.linkedin.com/in/shrinikatelu/)
